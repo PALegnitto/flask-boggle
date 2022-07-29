@@ -30,23 +30,16 @@ def new_game():
 
 @app.post("/api/score-word")
 def score_word():
+    """Accepts JSON game ID and word, checks if word is valid and on board."""
     word_input = request.json
     gameId = word_input["gameId"]
-    game = games[f"{gameId}"]
+    game = games[gameId]
     result_value = "ok"
 
-    #accept a post request with JSON for game id and the word
     if not game.is_word_in_word_list(word_input["word"]):
-        result_value = "note-word"
+        result_value = "not-word"
     elif not game.check_word_on_board(word_input["word"]):
         result_value = "not-on-board"
 
-    
-
-
-    #is_word_in_word_list()
-    #check_word_on_board()
-
-    return {"result": f"{result_value}"}
     #return a JSON response using jsonify
-    #one of three options using conditional logic
+    return jsonify({"result": result_value})

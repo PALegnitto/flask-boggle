@@ -40,6 +40,33 @@ class BoggleAppTestCase(TestCase):
             self.assertTrue(type(json["gameId"] == "string"))
             self.assertTrue(games[json["gameId"]])
 
+    def test_api_score_word(self):
+        """Test scoring a word."""
+
+        with self.client as client:
+            response = client.post("/api/new-game")
+            json = response.get_json()
+            gameId = json["gameId"]
+            current_game = games[gameId]
+
+            current_game.board = [["B","E","E","E","S"],
+                                  ["X","X","X","X","X"],
+                                  ["X","X","X","X","X"],
+                                  ["X","X","X","X","X"],
+                                  ["X","X","X","X","X"]]
             
-            # self.assertIn('Wow! I like blue, too', json)
-            # write a test for this route
+            score_response = client.post("/api/score-word",
+                                        json={"gameId":gameId,"word":"BEE"})
+            json_response = score_response.get_json()
+            self.assertEqual({'result': 'ok'}, json_response)
+            
+            score_response = client.post("/api/score-word",
+                                        json={"gameId":gameId,"word":"XXXX"})
+            json_response = score_response.get_json()
+            self.assertEqual({'result': 'not-word'}, json_response)
+            
+            score_response = client.post("/api/score-word",
+                                        json={"gameId":gameId,"word":"SEA"})
+            json_response = score_response.get_json()
+            self.assertEqual({'result': 'not-on-board'}, json_response)
+            
