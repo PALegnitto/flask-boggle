@@ -4,7 +4,7 @@ from uuid import uuid4
 from boggle import BoggleGame
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "this-is-secret"
+app.config["SECRET_KEY"] = "12390123lkaslkjald_hi_Elie_Spencer_Brian_Sarah23123"
 
 # The boggle games created, keyed by game id
 games = {}
@@ -26,4 +26,6 @@ def new_game():
     game = BoggleGame()
     games[game_id] = game
 
-    return {"gameId": "need-real-id", "board": "need-real-board"}
+    return jsonify({"gameId": game_id, "board": game.board})
+
+   
