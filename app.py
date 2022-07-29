@@ -28,4 +28,15 @@ def new_game():
 
     return jsonify({"gameId": game_id, "board": game.board})
 
-   
+@app.post("/api/score-word")
+def score_word():
+
+    word_input = request.json
+
+    #accept a post request with JSON for game id and the word
+    #is_word_in_word_list()
+    #check_word_on_board()
+
+    return "A successful test"
+    #return a JSON response using jsonify
+    #one of three options using conditional logic
