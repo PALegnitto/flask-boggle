@@ -38,6 +38,7 @@ class BoggleAppTestCase(TestCase):
             self.assertEqual(response.status_code, 200)
             self.assertTrue(type(json["board"] == "list"))
             self.assertTrue(type(json["gameId"] == "string"))
+            #assertIsInstance
             self.assertTrue(games[json["gameId"]])
 
     def test_api_score_word(self):

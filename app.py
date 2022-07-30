@@ -34,12 +34,12 @@ def score_word():
     word_input = request.json
     gameId = word_input["gameId"]
     game = games[gameId]
-    result_value = "ok"
 
+    #return jsonify
     if not game.is_word_in_word_list(word_input["word"]):
-        result_value = "not-word"
+        return jsonify({"result": "not-word"})
     elif not game.check_word_on_board(word_input["word"]):
-        result_value = "not-on-board"
-
-    #return a JSON response using jsonify
-    return jsonify({"result": result_value})
+        return jsonify({"result": "not-on-board"})
+    else:
+        game.play_and_score_word(word_input["word"])
+        return jsonify({"result": "ok"})
